@@ -1,5 +1,10 @@
 ---
-# Applications
+# Environment
+environment:
+  stage: "DEVELOPMENT" # DEVELOPMENT, TEST, STAGING, PRODUCTION
+  runTestEnvironment: ["DEVELOPMENT"]
+
+  # Applications
 applications:
   servers:
     restapi:
