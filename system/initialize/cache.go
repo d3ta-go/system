@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"fmt"
+	"reflect"
 
 	"github.com/d3ta-go/system/system/cacher"
 	"github.com/d3ta-go/system/system/cacher/adapter"
@@ -10,6 +11,30 @@ import (
 	"github.com/d3ta-go/system/system/config"
 	"github.com/d3ta-go/system/system/handler"
 )
+
+// OpenAllCacheConnection open all cache connection
+func OpenAllCacheConnection(h *handler.Handler) error {
+	cfg, err := h.GetDefaultConfig()
+	if err != nil {
+		return err
+	}
+
+	if cfg != nil {
+		dbs := cfg.Caches
+		e := reflect.ValueOf(&dbs).Elem()
+		for i := 0; i < e.NumField(); i++ {
+			cacheConfig := e.Field(i).Interface()
+			if cacheConfig != nil {
+				err := OpenCacheConnection(cacheConfig.(config.Cache), h)
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+
+	return nil
+}
 
 // OpenCacheConnection open CacheConnection
 func OpenCacheConnection(config config.Cache, h *handler.Handler) error {
