@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/blang/semver/v4 v4.0.0
 	github.com/casbin/casbin/v2 v2.16.0
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/elastic/go-elasticsearch/v6 v6.8.10
 	github.com/elastic/go-elasticsearch/v7 v7.9.0
 	github.com/elastic/go-elasticsearch/v8 v8.0.0-20201022194115-1af099fb3eca
