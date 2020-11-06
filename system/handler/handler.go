@@ -24,6 +24,7 @@ func NewHandler() (*Handler, error) {
 // Handler represent Handler
 type Handler struct {
 	defaultConfig   *config.Config
+	sConfigs        map[string]interface{}
 	dbGorms         map[string]*gorm.DB
 	casbinEnforcers map[string]*casbin.Enforcer
 	cachers         map[string]*cacher.Cacher
@@ -41,6 +42,24 @@ func (h *Handler) GetDefaultConfig() (*config.Config, error) {
 		return nil, fmt.Errorf("ERROR: [%s]", "Default Configuration Does Not Exist")
 	}
 	return h.defaultConfig, nil
+}
+
+// SetSpecificConfig set specific config by config name
+func (h *Handler) SetSpecificConfig(cfgName string, cfg interface{}) {
+	if h.sConfigs == nil {
+		h.sConfigs = make(map[string]interface{})
+	}
+	h.sConfigs[cfgName] = cfg
+}
+
+// GetSpecificConfig get specific config by config name
+func (h *Handler) GetSpecificConfig(cfgName string) (interface{}, error) {
+	cfg, exist := h.sConfigs[cfgName]
+	if !exist {
+		err := fmt.Errorf("Config Name '%s' Not Found", cfgName)
+		return nil, err
+	}
+	return cfg, nil
 }
 
 // SetGormDB set GORM database connection by connection name
