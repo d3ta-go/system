@@ -1,6 +1,9 @@
 package identity
 
-import "github.com/casbin/casbin/v2"
+import (
+	"github.com/casbin/casbin/v2"
+	"github.com/d3ta-go/system/system/handler"
+)
 
 // TokenType represent TokenType
 type TokenType string
@@ -32,5 +35,24 @@ type Identity struct {
 	Token       string
 	Claims      *JWTCustomClaims
 
+	ctx      interface{}
+	handler  *handler.Handler
 	enforcer casbin.IEnforcer
+}
+
+// NewIdentity new Identity
+func NewIdentity(iType TheIdentityType, tokenType TokenType, token string, claims *JWTCustomClaims, ctx interface{}, h *handler.Handler) (Identity, error) {
+
+	i := Identity{
+		identityType: iType,
+		handler:      h,
+		IsLogin:      false,
+		IsAnonymous:  false,
+		TokenType:    tokenType,
+		Token:        token,
+		Claims:       claims,
+		ctx:          ctx,
+	}
+
+	return i, nil
 }
