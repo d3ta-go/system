@@ -3,6 +3,7 @@ package initialize
 import (
 	"errors"
 	"fmt"
+	"reflect"
 
 	// "github.com/jinzhu/gorm"
 	// _ "github.com/jinzhu/gorm/dialects/mysql"
@@ -18,6 +19,33 @@ import (
 	"github.com/d3ta-go/system/system/config"
 	"github.com/d3ta-go/system/system/handler"
 )
+
+// LoadAllDatabaseConnection load All Database Connection
+func LoadAllDatabaseConnection(h *handler.Handler) error {
+	cfg, err := h.GetDefaultConfig()
+	if err != nil {
+		return err
+	}
+
+	if cfg != nil {
+		dbs := cfg.Databases
+		e := reflect.ValueOf(&dbs).Elem()
+		for i := 0; i < e.NumField(); i++ {
+			// varName := e.Type().Field(i).Name
+			// varType := e.Type().Field(i).Type
+			dbConfig := e.Field(i).Interface()
+			// fmt.Printf("%v %v %v\n", varName, varType, dbConfig)
+			if dbConfig != nil {
+				err := LoadDatabaseConnection(dbConfig.(config.Database), h)
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+
+	return nil
+}
 
 // LoadDatabaseConnection load Database Connection using GORM
 func LoadDatabaseConnection(dbConfig config.Database, h *handler.Handler) error {
