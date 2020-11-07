@@ -8,7 +8,7 @@ import (
 	"github.com/d3ta-go/system/system/context"
 	"github.com/d3ta-go/system/system/handler"
 	"github.com/d3ta-go/system/system/service"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 // TokenType represent TokenType
