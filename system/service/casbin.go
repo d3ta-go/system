@@ -39,7 +39,7 @@ func NewCasbinEnforcer(h *handler.Handler, modelPath string) (*casbin.Enforcer, 
 		enf.AddFunction("ParamsMatch", paramsMatchFunc)
 	*/
 
-	cAdp, err := cGormAdapter.NewAdapterByDBUseTableName(dbCon, "iam_", "casbin")
+	cAdp, err := cGormAdapter.NewAdapterByDBUseTableName(dbCon, "iam", "casbin_rule")
 	if err != nil {
 		return nil, err
 	}
