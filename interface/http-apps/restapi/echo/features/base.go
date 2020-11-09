@@ -31,7 +31,8 @@ func (f *BaseFeature) GetHandler() *handler.Handler {
 	return f.handler
 }
 
-func (f *BaseFeature) translateErrorMessage(err error, c echo.Context) error {
+// TranslateErrorMessage translate echo error message
+func (f *BaseFeature) TranslateErrorMessage(err error, c echo.Context) error {
 	// fmt.Printf("Type: %T, Value: %#v", err, err)
 	switch fmt.Sprintf("%T", err) {
 	case "*echo.HTTPError":
@@ -109,7 +110,8 @@ func (f *BaseFeature) SetIdentity(c echo.Context) (identity.Identity, error) {
 	return i, err
 }
 
-func (f *BaseFeature) inTestMode() bool {
+// InTestMode detect in test mode
+func (f *BaseFeature) InTestMode() bool {
 	return strings.HasSuffix(os.Args[0], ".test")
 
 }
