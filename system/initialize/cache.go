@@ -25,9 +25,11 @@ func OpenAllCacheConnection(h *handler.Handler) error {
 		for i := 0; i < e.NumField(); i++ {
 			cacheConfig := e.Field(i).Interface()
 			if cacheConfig != nil {
-				err := OpenCacheConnection(cacheConfig.(config.Cache), h)
-				if err != nil {
-					return err
+				if (cacheConfig.(config.Cache).ConnectionName != "") && (cacheConfig.(config.Cache).Driver != "") {
+					err := OpenCacheConnection(cacheConfig.(config.Cache), h)
+					if err != nil {
+						return err
+					}
 				}
 			}
 		}

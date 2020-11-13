@@ -31,14 +31,13 @@ func LoadAllDatabaseConnection(h *handler.Handler) error {
 		dbs := cfg.Databases
 		e := reflect.ValueOf(&dbs).Elem()
 		for i := 0; i < e.NumField(); i++ {
-			// varName := e.Type().Field(i).Name
-			// varType := e.Type().Field(i).Type
 			dbConfig := e.Field(i).Interface()
-			// fmt.Printf("%v %v %v\n", varName, varType, dbConfig)
 			if dbConfig != nil {
-				err := LoadDatabaseConnection(dbConfig.(config.Database), h)
-				if err != nil {
-					return err
+				if (dbConfig.(config.Database).ConnectionName != "") && (dbConfig.(config.Database).Driver != "") {
+					err := LoadDatabaseConnection(dbConfig.(config.Database), h)
+					if err != nil {
+						return err
+					}
 				}
 			}
 		}

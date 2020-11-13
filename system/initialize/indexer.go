@@ -22,9 +22,11 @@ func OpenAllIndexerConnection(h *handler.Handler) error {
 		for i := 0; i < e.NumField(); i++ {
 			idxConfig := e.Field(i).Interface()
 			if idxConfig != nil {
-				err := OpenIndexerConnection(idxConfig.(config.Indexer), h)
-				if err != nil {
-					return err
+				if (idxConfig.(config.Indexer).ConnectionName != "") && (idxConfig.(config.Indexer).Driver != "") {
+					err := OpenIndexerConnection(idxConfig.(config.Indexer), h)
+					if err != nil {
+						return err
+					}
 				}
 			}
 		}
