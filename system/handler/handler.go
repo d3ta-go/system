@@ -10,6 +10,7 @@ import (
 	"github.com/d3ta-go/system/system/cacher"
 	"github.com/d3ta-go/system/system/config"
 	"github.com/d3ta-go/system/system/indexer"
+	"github.com/spf13/viper"
 )
 
 // NewHandler new Handler
@@ -25,6 +26,7 @@ func NewHandler() (*Handler, error) {
 type Handler struct {
 	defaultConfig   *config.Config
 	sConfigs        map[string]interface{}
+	vipers          map[string]*viper.Viper
 	dbGorms         map[string]*gorm.DB
 	casbinEnforcers map[string]*casbin.Enforcer
 	cachers         map[string]*cacher.Cacher
@@ -60,6 +62,28 @@ func (h *Handler) GetSpecificConfig(cfgName string) (interface{}, error) {
 		return nil, err
 	}
 	return cfg, nil
+}
+
+// SetViper set viper
+func (h *Handler) SetViper(key string, v *viper.Viper) error {
+	if v == nil {
+		return fmt.Errorf("invalid viper")
+	}
+	if h.vipers == nil {
+		h.vipers = make(map[string]*viper.Viper)
+	}
+	h.vipers[key] = v
+	return nil
+}
+
+// GetViper get viper
+func (h *Handler) GetViper(key string) (*viper.Viper, error) {
+	v, exist := h.vipers[key]
+	if !exist {
+		err := fmt.Errorf("Viper Key '%s' Not Found", key)
+		return nil, err
+	}
+	return v, nil
 }
 
 // SetGormDB set GORM database connection by connection name

@@ -37,6 +37,17 @@ func TestHandler(t *testing.T) {
 		assert.NotEmpty(t, me.One)
 	}
 
+	// Viper
+	viper, err := h.GetViper("not-found")
+	if assert.Error(t, err, "Should be Error while getting Viper from Handler: h.GetViper()") {
+		assert.Nil(t, viper)
+	}
+
+	err2 := h.SetViper("nil-value", nil)
+	if assert.Error(t, err2, "Should be Error while setting Viper from Handler: h.SetViper()") {
+		assert.Nil(t, viper)
+	}
+
 	// Gorm DB
 	dbCon, err := h.GetGormDB("not-found")
 	if assert.Error(t, err, "Should be Error while getting GormDB from Handler: h.GetGormDB()") {
