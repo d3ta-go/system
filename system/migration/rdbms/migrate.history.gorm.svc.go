@@ -13,7 +13,8 @@ import (
 // GormMigrationHistoryEntity represent GormMigrationHistoryEntity
 type GormMigrationHistoryEntity struct {
 	gorm.Model
-	ScriptName   string `gorm:"unique;size:500"`
+	Database     string `gorm:"index:idx_mig_unique,unique;size:100"`
+	ScriptName   string `gorm:"index:idx_mig_unique,unique;size:500"`
 	ScriptType   string `gorm:"size:50"`
 	RunFrom      string `gorm:"size:200"`
 	RunNote      string `gorm:"size:4000"`
@@ -56,7 +57,7 @@ type GormMigrationHistoryService struct {
 func (s *GormMigrationHistoryService) FindByScriptName(scriptName string) (exist bool, ett *GormMigrationHistoryEntity, err error) {
 	var ettMigHis GormMigrationHistoryEntity
 
-	result := s.dbGorm.Unscoped().Where(&GormMigrationHistoryEntity{ScriptName: scriptName}).First(&ettMigHis)
+	result := s.dbGorm.Unscoped().Where(&GormMigrationHistoryEntity{Database: s.dbGorm.Migrator().CurrentDatabase(), ScriptName: scriptName}).First(&ettMigHis)
 	if result.Error != nil {
 		if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return false, nil, result.Error
@@ -78,6 +79,7 @@ func (s *GormMigrationHistoryService) HasBeenExecuted(scriptName string) (bool, 
 // SaveRunExecution save run execution
 func (s *GormMigrationHistoryService) SaveRunExecution(scriptName string, scriptType string, note string) error {
 	ettMigHis := GormMigrationHistoryEntity{
+		Database:   s.dbGorm.Migrator().CurrentDatabase(),
 		ScriptName: scriptName,
 		ScriptType: scriptType,
 		RunNote:    note,
