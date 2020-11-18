@@ -5,8 +5,8 @@ import (
 	"gorm.io/gorm"
 )
 
-// BaseGormMigrateRunner represent BaseGormMigrateRunner
-type BaseGormMigrateRunner struct {
+// BaseGormMigratorRunner represent BaseGormMigratorRunner
+type BaseGormMigratorRunner struct {
 	id         string
 	handler    *handler.Handler
 	dbConnName string
@@ -14,27 +14,27 @@ type BaseGormMigrateRunner struct {
 }
 
 // SetID set ID
-func (bmr *BaseGormMigrateRunner) SetID(id string) {
+func (bmr *BaseGormMigratorRunner) SetID(id string) {
 	bmr.id = id
 }
 
 // GetID get ID
-func (bmr *BaseGormMigrateRunner) GetID() string {
+func (bmr *BaseGormMigratorRunner) GetID() string {
 	return bmr.id
 }
 
 // SetHandler set Handler
-func (bmr *BaseGormMigrateRunner) SetHandler(h *handler.Handler) {
+func (bmr *BaseGormMigratorRunner) SetHandler(h *handler.Handler) {
 	bmr.handler = h
 }
 
 // GetHandler get Handler
-func (bmr *BaseGormMigrateRunner) GetHandler() *handler.Handler {
+func (bmr *BaseGormMigratorRunner) GetHandler() *handler.Handler {
 	return bmr.handler
 }
 
 // SetDBConnName set dbConnName
-func (bmr *BaseGormMigrateRunner) SetDBConnName(dbConnName string) error {
+func (bmr *BaseGormMigratorRunner) SetDBConnName(dbConnName string) error {
 	bmr.dbConnName = dbConnName
 	if dbConnName != "" {
 		dbGorm, err := bmr.handler.GetGormDB(bmr.dbConnName)
@@ -47,16 +47,16 @@ func (bmr *BaseGormMigrateRunner) SetDBConnName(dbConnName string) error {
 }
 
 // GetDBConnName get dbConnName
-func (bmr *BaseGormMigrateRunner) GetDBConnName() string {
+func (bmr *BaseGormMigratorRunner) GetDBConnName() string {
 	return bmr.dbConnName
 }
 
 // SetGorm set dbGorm
-func (bmr *BaseGormMigrateRunner) SetGorm(db *gorm.DB) {
+func (bmr *BaseGormMigratorRunner) SetGorm(db *gorm.DB) {
 	bmr.dbGorm = db
 }
 
 // GetGorm get dbGorm
-func (bmr *BaseGormMigrateRunner) GetGorm() *gorm.DB {
+func (bmr *BaseGormMigratorRunner) GetGorm() *gorm.DB {
 	return bmr.dbGorm
 }

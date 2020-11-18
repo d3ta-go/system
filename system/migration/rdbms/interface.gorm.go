@@ -5,8 +5,8 @@ import (
 	"gorm.io/gorm"
 )
 
-// IGormMigrateRunner represent GormMigrateRunner Interface
-type IGormMigrateRunner interface {
+// IGormMigratorRunner represent GormMigratorRunner Interface
+type IGormMigratorRunner interface {
 	GetID() string
 	Run(h *handler.Handler, dbGorm *gorm.DB) error
 	RollBack(h *handler.Handler, dbGorm *gorm.DB) error

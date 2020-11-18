@@ -6,19 +6,19 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBaseGormMigrateRunner_SetID(t *testing.T) {
-	bgmr := BaseGormMigrateRunner{}
+func TestBaseGormMigratorRunner_SetID(t *testing.T) {
+	bgmr := BaseGormMigratorRunner{}
 	bgmr.SetID("unique-id")
 }
 
-func TestBaseGormMigrateRunner_GetID(t *testing.T) {
-	bgmr := BaseGormMigrateRunner{}
+func TestBaseGormMigratorRunner_GetID(t *testing.T) {
+	bgmr := BaseGormMigratorRunner{}
 	bgmr.SetID("unique-id")
 	assert.Equal(t, "unique-id", bgmr.GetID())
 }
 
-func TestBaseGormMigrateRunner_SetHandler(t *testing.T) {
-	bgmr := BaseGormMigrateRunner{}
+func TestBaseGormMigratorRunner_SetHandler(t *testing.T) {
+	bgmr := BaseGormMigratorRunner{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -27,8 +27,8 @@ func TestBaseGormMigrateRunner_SetHandler(t *testing.T) {
 	bgmr.SetHandler(h)
 }
 
-func TestBaseGormMigrateRunner_GetHandler(t *testing.T) {
-	bgmr := BaseGormMigrateRunner{}
+func TestBaseGormMigratorRunner_GetHandler(t *testing.T) {
+	bgmr := BaseGormMigratorRunner{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -38,8 +38,8 @@ func TestBaseGormMigrateRunner_GetHandler(t *testing.T) {
 	assert.Equal(t, h, bgmr.GetHandler())
 }
 
-func TestBaseGormMigrateRunner_SetDBConnName(t *testing.T) {
-	bgmr := BaseGormMigrateRunner{}
+func TestBaseGormMigratorRunner_SetDBConnName(t *testing.T) {
+	bgmr := BaseGormMigratorRunner{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -49,8 +49,8 @@ func TestBaseGormMigrateRunner_SetDBConnName(t *testing.T) {
 	bgmr.SetDBConnName("db-identity")
 }
 
-func TestBaseGormMigrateRunner_GetDBConnName(t *testing.T) {
-	bgmr := BaseGormMigrateRunner{}
+func TestBaseGormMigratorRunner_GetDBConnName(t *testing.T) {
+	bgmr := BaseGormMigratorRunner{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -61,8 +61,8 @@ func TestBaseGormMigrateRunner_GetDBConnName(t *testing.T) {
 	assert.Equal(t, "db-identity", bgmr.GetDBConnName())
 }
 
-func TestBaseGormMigrateRunner_SetGorm(t *testing.T) {
-	bgmr := BaseGormMigrateRunner{}
+func TestBaseGormMigratorRunner_SetGorm(t *testing.T) {
+	bgmr := BaseGormMigratorRunner{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -73,8 +73,8 @@ func TestBaseGormMigrateRunner_SetGorm(t *testing.T) {
 	bgmr.SetGorm(bgmr.GetGorm())
 }
 
-func TestBaseGormMigrateRunner_GetGorm(t *testing.T) {
-	bgmr := BaseGormMigrateRunner{}
+func TestBaseGormMigratorRunner_GetGorm(t *testing.T) {
+	bgmr := BaseGormMigratorRunner{}
 
 	h, err := newHandler(t)
 	if err != nil {

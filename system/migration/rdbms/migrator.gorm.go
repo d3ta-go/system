@@ -15,11 +15,11 @@ const (
 	GMTSeed    GormMigrationType = "SEED"
 )
 
-// NewBaseGormMigrate create new BaseGormMigrate
-func NewBaseGormMigrate(h *handler.Handler, dbConnName string) (*BaseGormMigrate, error) {
+// NewBaseGormMigrator create new BaseGormMigrator
+func NewBaseGormMigrator(h *handler.Handler, dbConnName string) (*BaseGormMigrator, error) {
 	var err error
 
-	mig := new(BaseGormMigrate)
+	mig := new(BaseGormMigrator)
 	mig.handler = h
 	if err := mig.SetDBConnName(dbConnName); err != nil {
 		return nil, err
@@ -30,28 +30,28 @@ func NewBaseGormMigrate(h *handler.Handler, dbConnName string) (*BaseGormMigrate
 	return mig, nil
 }
 
-// BaseGormMigrate represent BaseGormMigrate
-type BaseGormMigrate struct {
-	handler              *handler.Handler
-	dbConnName           string
-	dbGorm               *gorm.DB
-	migrationHistorySvc  *GormMigrationHistoryService
-	runMigrateItems      map[string][]IGormMigrateRunner
-	rollBackMigrateItems map[string][]IGormMigrateRunner
+// BaseGormMigrator represent BaseGormMigrator
+type BaseGormMigrator struct {
+	handler               *handler.Handler
+	dbConnName            string
+	dbGorm                *gorm.DB
+	migrationHistorySvc   *GormMigrationHistoryService
+	runMigratorItems      map[string][]IGormMigratorRunner
+	rollBackMigratorItems map[string][]IGormMigratorRunner
 }
 
 // SetHandler set Handler
-func (bgm *BaseGormMigrate) SetHandler(h *handler.Handler) {
+func (bgm *BaseGormMigrator) SetHandler(h *handler.Handler) {
 	bgm.handler = h
 }
 
 // GetHandler get Handler
-func (bgm *BaseGormMigrate) GetHandler() *handler.Handler {
+func (bgm *BaseGormMigrator) GetHandler() *handler.Handler {
 	return bgm.handler
 }
 
 // SetDBConnName set dbConnName
-func (bgm *BaseGormMigrate) SetDBConnName(dbConnName string) error {
+func (bgm *BaseGormMigrator) SetDBConnName(dbConnName string) error {
 	bgm.dbConnName = dbConnName
 	if dbConnName != "" {
 		dbGorm, err := bgm.handler.GetGormDB(bgm.dbConnName)
@@ -64,61 +64,61 @@ func (bgm *BaseGormMigrate) SetDBConnName(dbConnName string) error {
 }
 
 // GetDBConnName get dbConnName
-func (bgm *BaseGormMigrate) GetDBConnName() string {
+func (bgm *BaseGormMigrator) GetDBConnName() string {
 	return bgm.dbConnName
 }
 
 // SetGorm set dbGorm
-func (bgm *BaseGormMigrate) SetGorm(db *gorm.DB) {
+func (bgm *BaseGormMigrator) SetGorm(db *gorm.DB) {
 	bgm.dbGorm = db
 }
 
 // GetGorm get dbGorm
-func (bgm *BaseGormMigrate) GetGorm() *gorm.DB {
+func (bgm *BaseGormMigrator) GetGorm() *gorm.DB {
 	return bgm.dbGorm
 }
 
-// GetRunMigrateItems get runMigrateItems
-func (bgm *BaseGormMigrate) GetRunMigrateItems(mt GormMigrationType) []IGormMigrateRunner {
-	val, ok := bgm.runMigrateItems[string(mt)]
+// GetRunMigratorItems get runMigratorItems
+func (bgm *BaseGormMigrator) GetRunMigratorItems(mt GormMigrationType) []IGormMigratorRunner {
+	val, ok := bgm.runMigratorItems[string(mt)]
 	if !ok {
-		var valnil []IGormMigrateRunner
+		var valnil []IGormMigratorRunner
 		val = valnil
 	}
 	return val
 }
 
-// GetRollBackMigrateItems get rollBackMigrateItems
-func (bgm *BaseGormMigrate) GetRollBackMigrateItems(mt GormMigrationType) []IGormMigrateRunner {
-	val, ok := bgm.rollBackMigrateItems[string(mt)]
+// GetRollBackMigratorItems get rollBackMigratorItems
+func (bgm *BaseGormMigrator) GetRollBackMigratorItems(mt GormMigrationType) []IGormMigratorRunner {
+	val, ok := bgm.rollBackMigratorItems[string(mt)]
 	if !ok {
-		var valnil []IGormMigrateRunner
+		var valnil []IGormMigratorRunner
 		val = valnil
 	}
 	return val
 }
 
 // RunMigrates run Migration
-func (bgm *BaseGormMigrate) RunMigrates(h *handler.Handler, dbConnName string, items ...IGormMigrateRunner) error {
+func (bgm *BaseGormMigrator) RunMigrates(h *handler.Handler, dbConnName string, items ...IGormMigratorRunner) error {
 	return bgm._run(h, dbConnName, GMTMigrate, items...)
 }
 
 // RollBackMigrates rollback Migrate
-func (bgm *BaseGormMigrate) RollBackMigrates(h *handler.Handler, dbConnName string, items ...IGormMigrateRunner) error {
+func (bgm *BaseGormMigrator) RollBackMigrates(h *handler.Handler, dbConnName string, items ...IGormMigratorRunner) error {
 	return bgm._rollback(h, dbConnName, GMTMigrate, items...)
 }
 
 // RunSeeds run Seed
-func (bgm *BaseGormMigrate) RunSeeds(h *handler.Handler, dbConnName string, items ...IGormMigrateRunner) error {
+func (bgm *BaseGormMigrator) RunSeeds(h *handler.Handler, dbConnName string, items ...IGormMigratorRunner) error {
 	return bgm._run(h, dbConnName, GMTSeed, items...)
 }
 
 // RollBackSeeds roolback Seed
-func (bgm *BaseGormMigrate) RollBackSeeds(h *handler.Handler, dbConnName string, items ...IGormMigrateRunner) error {
+func (bgm *BaseGormMigrator) RollBackSeeds(h *handler.Handler, dbConnName string, items ...IGormMigratorRunner) error {
 	return bgm._rollback(h, dbConnName, GMTSeed, items...)
 }
 
-func (bgm *BaseGormMigrate) _run(h *handler.Handler, dbConnName string, mt GormMigrationType, items ...IGormMigrateRunner) error {
+func (bgm *BaseGormMigrator) _run(h *handler.Handler, dbConnName string, mt GormMigrationType, items ...IGormMigratorRunner) error {
 	if h != nil {
 		bgm.handler = h
 	}
@@ -133,10 +133,10 @@ func (bgm *BaseGormMigrate) _run(h *handler.Handler, dbConnName string, mt GormM
 
 	if bgm.dbGorm != nil {
 		if items != nil && len(items) > 0 {
-			if bgm.runMigrateItems == nil {
-				bgm.runMigrateItems = make(map[string][]IGormMigrateRunner)
+			if bgm.runMigratorItems == nil {
+				bgm.runMigratorItems = make(map[string][]IGormMigratorRunner)
 			}
-			var executedList []IGormMigrateRunner
+			var executedList []IGormMigratorRunner
 			for _, ir := range items {
 				if ir != nil {
 					hasBeenExecuted, err := bgm.migrationHistorySvc.HasBeenExecuted(ir.GetID())
@@ -158,14 +158,14 @@ func (bgm *BaseGormMigrate) _run(h *handler.Handler, dbConnName string, mt GormM
 					}
 				}
 			}
-			bgm.runMigrateItems[string(mt)] = executedList
+			bgm.runMigratorItems[string(mt)] = executedList
 		}
 	}
 
 	return nil
 }
 
-func (bgm *BaseGormMigrate) _rollback(h *handler.Handler, dbConnName string, mt GormMigrationType, items ...IGormMigrateRunner) error {
+func (bgm *BaseGormMigrator) _rollback(h *handler.Handler, dbConnName string, mt GormMigrationType, items ...IGormMigratorRunner) error {
 	if h != nil {
 		bgm.handler = h
 	}
@@ -180,10 +180,10 @@ func (bgm *BaseGormMigrate) _rollback(h *handler.Handler, dbConnName string, mt 
 
 	if bgm.dbGorm != nil {
 		if items != nil && len(items) > 0 {
-			if bgm.rollBackMigrateItems == nil {
-				bgm.rollBackMigrateItems = make(map[string][]IGormMigrateRunner)
+			if bgm.rollBackMigratorItems == nil {
+				bgm.rollBackMigratorItems = make(map[string][]IGormMigratorRunner)
 			}
-			var executedList []IGormMigrateRunner
+			var executedList []IGormMigratorRunner
 			for _, ir := range items {
 				if ir != nil {
 					hasBeenExecuted, err := bgm.migrationHistorySvc.HasBeenExecuted(ir.GetID())
@@ -205,7 +205,7 @@ func (bgm *BaseGormMigrate) _rollback(h *handler.Handler, dbConnName string, mt 
 					}
 				}
 			}
-			bgm.rollBackMigrateItems[string(mt)] = executedList
+			bgm.rollBackMigratorItems[string(mt)] = executedList
 		}
 	}
 

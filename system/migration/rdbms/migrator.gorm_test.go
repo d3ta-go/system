@@ -6,13 +6,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func newBaseGormMigrate(t *testing.T) (*BaseGormMigrate, error) {
+func newBaseGormMigrator(t *testing.T) (*BaseGormMigrator, error) {
 	h, err := newHandler(t)
 	if err != nil {
 		return nil, err
 	}
 
-	m, err := NewBaseGormMigrate(h, "db-identity")
+	m, err := NewBaseGormMigrator(h, "db-identity")
 	if err != nil {
 		return nil, err
 	}
@@ -20,8 +20,8 @@ func newBaseGormMigrate(t *testing.T) (*BaseGormMigrate, error) {
 	return m, nil
 }
 
-func TestBaseGormMigrate_SetHandler(t *testing.T) {
-	bgm := BaseGormMigrate{}
+func TestBaseGormMigrator_SetHandler(t *testing.T) {
+	bgm := BaseGormMigrator{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -30,8 +30,8 @@ func TestBaseGormMigrate_SetHandler(t *testing.T) {
 	bgm.SetHandler(h)
 }
 
-func TestBaseGormMigrate_GetHandler(t *testing.T) {
-	bgm := BaseGormMigrate{}
+func TestBaseGormMigrator_GetHandler(t *testing.T) {
+	bgm := BaseGormMigrator{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -41,8 +41,8 @@ func TestBaseGormMigrate_GetHandler(t *testing.T) {
 	assert.Equal(t, h, bgm.GetHandler())
 }
 
-func TestBaseGormMigrate_SetDBConnName(t *testing.T) {
-	bgm := BaseGormMigrate{}
+func TestBaseGormMigrator_SetDBConnName(t *testing.T) {
+	bgm := BaseGormMigrator{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -52,8 +52,8 @@ func TestBaseGormMigrate_SetDBConnName(t *testing.T) {
 	bgm.SetDBConnName("db-identity")
 }
 
-func TestBaseGormMigrate_GetDBConnName(t *testing.T) {
-	bgm := BaseGormMigrate{}
+func TestBaseGormMigrator_GetDBConnName(t *testing.T) {
+	bgm := BaseGormMigrator{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -64,8 +64,8 @@ func TestBaseGormMigrate_GetDBConnName(t *testing.T) {
 	assert.Equal(t, "db-identity", bgm.GetDBConnName())
 }
 
-func TestBaseGormMigrate_SetGorm(t *testing.T) {
-	bgm := BaseGormMigrate{}
+func TestBaseGormMigrator_SetGorm(t *testing.T) {
+	bgm := BaseGormMigrator{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -76,8 +76,8 @@ func TestBaseGormMigrate_SetGorm(t *testing.T) {
 	bgm.SetGorm(bgm.GetGorm())
 }
 
-func TestBaseGormMigrate_GetGorm(t *testing.T) {
-	bgm := BaseGormMigrate{}
+func TestBaseGormMigrator_GetGorm(t *testing.T) {
+	bgm := BaseGormMigrator{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -93,8 +93,8 @@ func TestBaseGormMigrate_GetGorm(t *testing.T) {
 	assert.Equal(t, gorm, bgm.GetGorm())
 }
 
-func TestBaseGormMigrate_GetRunMigrateItems(t *testing.T) {
-	bgm := BaseGormMigrate{}
+func TestBaseGormMigrator_GetRunMigratorItems(t *testing.T) {
+	bgm := BaseGormMigrator{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -103,12 +103,12 @@ func TestBaseGormMigrate_GetRunMigrateItems(t *testing.T) {
 	bgm.SetHandler(h)
 	bgm.SetDBConnName("db-identity")
 
-	var valnil []IGormMigrateRunner
-	assert.Equal(t, valnil, bgm.GetRunMigrateItems(GMTMigrate))
+	var valnil []IGormMigratorRunner
+	assert.Equal(t, valnil, bgm.GetRunMigratorItems(GMTMigrate))
 }
 
-func TestBaseGormMigrate_GetRollBackMigrateItems(t *testing.T) {
-	bgm := BaseGormMigrate{}
+func TestBaseGormMigrator_GetRollBackMigratorItems(t *testing.T) {
+	bgm := BaseGormMigrator{}
 
 	h, err := newHandler(t)
 	if err != nil {
@@ -117,14 +117,14 @@ func TestBaseGormMigrate_GetRollBackMigrateItems(t *testing.T) {
 	bgm.SetHandler(h)
 	bgm.SetDBConnName("db-identity")
 
-	var valnil []IGormMigrateRunner
-	assert.Equal(t, valnil, bgm.GetRollBackMigrateItems(GMTMigrate))
+	var valnil []IGormMigratorRunner
+	assert.Equal(t, valnil, bgm.GetRollBackMigratorItems(GMTMigrate))
 }
 
-func TestBaseGormMigrate_RunMigrates(t *testing.T) {
-	bgm, err := newBaseGormMigrate(t)
+func TestBaseGormMigrator_RunMigrates(t *testing.T) {
+	bgm, err := newBaseGormMigrator(t)
 	if err != nil {
-		t.Errorf("Error: newBaseGormMigrate(), [%s]", err.Error())
+		t.Errorf("Error: newBaseGormMigrator(), [%s]", err.Error())
 		return
 	}
 	if bgm != nil {
@@ -136,10 +136,10 @@ func TestBaseGormMigrate_RunMigrates(t *testing.T) {
 	}
 }
 
-func TestBaseGormMigrate_RunSeeds(t *testing.T) {
-	bgm, err := newBaseGormMigrate(t)
+func TestBaseGormMigrator_RunSeeds(t *testing.T) {
+	bgm, err := newBaseGormMigrator(t)
 	if err != nil {
-		t.Errorf("Error: newBaseGormMigrate(), [%s]", err.Error())
+		t.Errorf("Error: newBaseGormMigrator(), [%s]", err.Error())
 		return
 	}
 	if bgm != nil {
@@ -151,10 +151,10 @@ func TestBaseGormMigrate_RunSeeds(t *testing.T) {
 	}
 }
 
-func TestBaseGormMigrate_RollBackSeeds(t *testing.T) {
-	bgm, err := newBaseGormMigrate(t)
+func TestBaseGormMigrator_RollBackSeeds(t *testing.T) {
+	bgm, err := newBaseGormMigrator(t)
 	if err != nil {
-		t.Errorf("Error: newBaseGormMigrate(), [%s]", err.Error())
+		t.Errorf("Error: newBaseGormMigrator(), [%s]", err.Error())
 		return
 	}
 	if bgm != nil {
@@ -166,10 +166,10 @@ func TestBaseGormMigrate_RollBackSeeds(t *testing.T) {
 	}
 }
 
-func TestBaseGormMigrate_RollBackMigrates(t *testing.T) {
-	bgm, err := newBaseGormMigrate(t)
+func TestBaseGormMigrator_RollBackMigrates(t *testing.T) {
+	bgm, err := newBaseGormMigrator(t)
 	if err != nil {
-		t.Errorf("Error: newBaseGormMigrate(), [%s]", err.Error())
+		t.Errorf("Error: newBaseGormMigrator(), [%s]", err.Error())
 		return
 	}
 	if bgm != nil {

@@ -16,10 +16,10 @@ type DummyTable struct {
 // MigrateRunner
 // =============
 type DummyMigrateRunner struct {
-	BaseGormMigrateRunner
+	BaseGormMigratorRunner
 }
 
-func NewDummyMigrateRunner() (IGormMigrateRunner, error) {
+func NewDummyMigrateRunner() (IGormMigratorRunner, error) {
 	gmr := new(DummyMigrateRunner)
 	gmr.SetID("DummyMigrateRunner")
 	return gmr, nil
@@ -59,10 +59,10 @@ func (dmr *DummyMigrateRunner) RollBack(h *handler.Handler, dbGorm *gorm.DB) err
 // SeedRunner
 // =============
 type DummySeedRunner struct {
-	BaseGormMigrateRunner
+	BaseGormMigratorRunner
 }
 
-func NewDummySeedRunner() (IGormMigrateRunner, error) {
+func NewDummySeedRunner() (IGormMigratorRunner, error) {
 	gms := new(DummySeedRunner)
 	gms.SetID("DummySeedRunner")
 	return gms, nil
