@@ -145,7 +145,7 @@ func (bgm *BaseGormMigrate) _run(h *handler.Handler, dbConnName string, mt GormM
 					}
 					if hasBeenExecuted == false {
 						if err := ir.Run(bgm.handler, bgm.dbGorm); err != nil {
-							fmt.Printf("Error while running %s.Run: %s", ir.GetID(), err.Error())
+							fmt.Printf("Error while running %s.Run: %s\n", ir.GetID(), err.Error())
 							if err := bgm.migrationHistorySvc.SaveRunExecution(ir.GetID(), string(mt), err.Error()); err != nil {
 								return err
 							}
@@ -192,7 +192,7 @@ func (bgm *BaseGormMigrate) _rollback(h *handler.Handler, dbConnName string, mt 
 					}
 					if hasBeenExecuted {
 						if err := ir.RollBack(bgm.handler, bgm.dbGorm); err != nil {
-							fmt.Printf("Error while running %s.RollBack: %s", ir.GetID(), err.Error())
+							fmt.Printf("Error while running %s.RollBack: %s\n", ir.GetID(), err.Error())
 							if err := bgm.migrationHistorySvc.SaveRollBackExecution(ir.GetID(), err.Error()); err != nil {
 								return err
 							}
