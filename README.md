@@ -1,4 +1,4 @@
-# system
+# system ( [![Go Report Card](https://goreportcard.com/badge/github.com/d3ta-go/system)](https://goreportcard.com/report/github.com/d3ta-go/system) )
 
 System Module/Package (Common System Libararies)
 
