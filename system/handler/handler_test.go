@@ -86,7 +86,7 @@ func TestHandler(t *testing.T) {
 
 	// Indexer
 	idx, err := h.GetIndexer("not-found")
-	if assert.Error(t, err, "Shoudl be Error while getting Indexer from Handler: h.GetIndexer()") {
+	if assert.Error(t, err, "Should be Error while getting Indexer from Handler: h.GetIndexer()") {
 		assert.Nil(t, idx)
 	}
 

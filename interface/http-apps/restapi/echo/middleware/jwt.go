@@ -28,7 +28,7 @@ func JWTVerifier(h *handler.Handler) echo.MiddlewareFunc {
 			authHeaderPart := strings.Split(authHeader, " ")
 			token := authHeaderPart[len(authHeaderPart)-1]
 			if token == "" {
-				return response.FailWithMessageWithCode(http.StatusForbidden, "Invalid token or illegas access", c)
+				return response.FailWithMessageWithCode(http.StatusForbidden, "Invalid token or illegal access", c)
 			}
 
 			j, err := identity.NewJWT(h)
@@ -80,7 +80,12 @@ func isSessionExist(sessionValue string, h *handler.Handler) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+	// goreportcard - ineffassign report warning: ineffectual assignment to can (ineffassign)
+	// ce, err := h.GetCacher(cfg.Caches.SessionCache.ConnectionName)
 	ce, err := h.GetCacher(cfg.Caches.SessionCache.ConnectionName)
+	if err != nil {
+		return false, err
+	}
 	ce.Context = "interface"
 	ce.Container = "session"
 	ce.Component = "jwt"

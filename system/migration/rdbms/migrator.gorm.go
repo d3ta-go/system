@@ -11,8 +11,10 @@ import (
 type GormMigrationType string
 
 const (
+	// GMTMigrate represent GORM Migration Type - MIGRATE (ddl)
 	GMTMigrate GormMigrationType = "MIGRATE"
-	GMTSeed    GormMigrationType = "SEED"
+	// GMTSeed represent GORM Migration TYpe - SEED (dml)
+	GMTSeed GormMigrationType = "SEED"
 )
 
 // NewBaseGormMigrator create new BaseGormMigrator

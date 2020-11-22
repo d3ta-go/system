@@ -9,10 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dchest/captcha"
-	"github.com/labstack/echo/v4"
 	"github.com/d3ta-go/system/interface/http-apps/restapi/echo/response"
 	"github.com/d3ta-go/system/system/config"
+	"github.com/dchest/captcha"
+	"github.com/labstack/echo/v4"
 )
 
 // GenerateCaptchaID generate Captcha

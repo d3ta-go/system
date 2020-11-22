@@ -17,10 +17,14 @@ type JWT struct {
 }
 
 var (
-	ErrTokenExpired     = errors.New("Token is expired [TokenExpired]")
+	// ErrTokenExpired represent Error for TokenExpired
+	ErrTokenExpired = errors.New("Token is expired [TokenExpired]")
+	// ErrTokenNotValidYet represent Error for TokenNotValidYet
 	ErrTokenNotValidYet = errors.New("Token not active yet [TokenNotValidYet]")
-	ErrTokenMalformed   = errors.New("That's not even a token [TokenMalformed]")
-	ErrTokenInvalid     = errors.New("Couldn't handle this token [IvalidToken]")
+	// ErrTokenMalformed represent Error for TokenMalformed
+	ErrTokenMalformed = errors.New("That's not even a token [TokenMalformed]")
+	// ErrTokenInvalid represent Error for TokenInvalid
+	ErrTokenInvalid = errors.New("Couldn't handle this token [IvalidToken]")
 )
 
 // NewJWT new JWT
@@ -66,9 +70,9 @@ func (j *JWT) ParseToken(tokenString string) (*JWTCustomClaims, error) {
 			return claims, nil
 		}
 		return nil, ErrTokenInvalid
-	} else {
-		return nil, ErrTokenInvalid
 	}
+
+	return nil, ErrTokenInvalid
 }
 
 // RefreshToken update token

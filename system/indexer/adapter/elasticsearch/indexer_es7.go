@@ -38,6 +38,7 @@ func (i *IndexerES7) GetEngine() interface{} {
 	return i.engine
 }
 
+// Search is a function to Search
 func (i *IndexerES7) Search(query io.Reader, prettify bool) ([]byte, error) {
 	var res *esapi.Response
 	var err error
@@ -67,6 +68,7 @@ func (i *IndexerES7) Search(query io.Reader, prettify bool) ([]byte, error) {
 	return body, nil
 }
 
+// SearchIndexDoc is a function to Search Index Doc
 func (i *IndexerES7) SearchIndexDoc(index string, query io.Reader, size int, prettify bool) ([]byte, error) {
 	var res *esapi.Response
 	var err error
@@ -100,6 +102,7 @@ func (i *IndexerES7) SearchIndexDoc(index string, query io.Reader, size int, pre
 	return body, nil
 }
 
+// IndexExist is a function to check Index is Exist
 func (i *IndexerES7) IndexExist(indexs []string) (bool, error) {
 	res, err := i.engine.Indices.Exists(indexs)
 	if err != nil {
@@ -110,6 +113,7 @@ func (i *IndexerES7) IndexExist(indexs []string) (bool, error) {
 	return res.StatusCode == 200, nil
 }
 
+// CreateIndex is a function to Create Index
 func (i *IndexerES7) CreateIndex(index string, mapping io.Reader) error {
 	res, err := i.engine.Indices.Create(index, i.engine.Indices.Create.WithBody(mapping))
 	if err != nil {
@@ -128,6 +132,7 @@ func (i *IndexerES7) CreateIndex(index string, mapping io.Reader) error {
 	return nil
 }
 
+// DropIndex is a function to Drop Index
 func (i *IndexerES7) DropIndex(indexs []string) error {
 	res, err := i.engine.Indices.Delete(indexs)
 	if err != nil {
@@ -146,6 +151,7 @@ func (i *IndexerES7) DropIndex(indexs []string) error {
 	return nil
 }
 
+// DocExist is a function to check Doc is Exist
 func (i *IndexerES7) DocExist(index string, id string) (bool, error) {
 
 	res, err := i.engine.Exists(index, id)
@@ -157,6 +163,7 @@ func (i *IndexerES7) DocExist(index string, id string) (bool, error) {
 	return res.StatusCode == 200, nil
 }
 
+// CreateDoc is a function to Create Doc
 func (i *IndexerES7) CreateDoc(index string, id string, body io.Reader) error {
 
 	res, err := i.engine.Create(index, id, body)
@@ -176,6 +183,7 @@ func (i *IndexerES7) CreateDoc(index string, id string, body io.Reader) error {
 	return nil
 }
 
+// GetDoc is a function to Get Doc
 func (i *IndexerES7) GetDoc(index string, id string) ([]byte, error) {
 
 	res, err := i.engine.Get(index, id)
@@ -192,6 +200,7 @@ func (i *IndexerES7) GetDoc(index string, id string) ([]byte, error) {
 	return body, nil
 }
 
+// UpdateDoc is a function to Update Doc
 func (i *IndexerES7) UpdateDoc(index string, id string, body io.Reader) error {
 
 	res, err := i.engine.Update(index, id, body)
@@ -211,6 +220,7 @@ func (i *IndexerES7) UpdateDoc(index string, id string, body io.Reader) error {
 	return nil
 }
 
+// DeleteDoc is a function to Delete Doc
 func (i *IndexerES7) DeleteDoc(index string, id string) error {
 
 	res, err := i.engine.Delete(index, id)

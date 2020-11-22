@@ -38,10 +38,13 @@ type SMTPSender struct {
 	senderName  string
 }
 
+// EmailFormat represent EmailFormat
 type EmailFormat string
 
 const (
+	// HTMLEmail represent HTML Email Format
 	HTMLEmail EmailFormat = "HTML"
+	// TEXTEmail represent TEXT (Plaintext) Email Format
 	TEXTEmail EmailFormat = "TEXT"
 )
 

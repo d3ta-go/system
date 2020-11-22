@@ -1,16 +1,16 @@
 package gomacaron
 
 import (
+	"github.com/d3ta-go/system/system/cacher/adapter"
 	"github.com/go-macaron/cache"
 
+	// go-macaron cache adapter
 	_ "github.com/go-macaron/cache/ledis"
 	_ "github.com/go-macaron/cache/memcache"
 	_ "github.com/go-macaron/cache/mysql"
 	_ "github.com/go-macaron/cache/nodb"
 	_ "github.com/go-macaron/cache/postgres"
 	_ "github.com/go-macaron/cache/redis"
-
-	"github.com/d3ta-go/system/system/cacher/adapter"
 )
 
 // NewCacher new GoMacaron Cacher

@@ -73,7 +73,8 @@ func TestCasbin_NewCasbinEnforcer(t *testing.T) {
 		}
 
 		// check user permission (enforcer)
-		can := false
+		// can := false -> goreportcard - ineffassign report warning: ineffectual assignment to can (ineffassign)
+		var can bool
 		for _, role := range ir {
 			sub := role                                 // "group:admin"
 			obj := "/api/v1/covid19/current/by-country" //"/api/v1/geolocation/country"
