@@ -32,6 +32,22 @@ applications:
               name: MIT
               url: https://github.com/muharihar/d3la-go
             version: 1.0.0
+    graphqlAPI:
+      name: "DDD Technical Architecture Patterns:: GraphQL API"
+      version: "0.1.0"
+      description: "Domain-Driven Design Technical Architecture Patterns:: Golang Sample"
+      options:
+        showEngineHeader: true
+        displaySWAPI: true
+        listener:
+          port: 2020
+        middlewares:
+          logger:
+            enable: true
+        SWAPIConfig: # SWAPIConfig
+          config:
+            appTitle: "DDD Technical Architecture Patterns:: GraphQL API"
+            schemaLocation: "./interface/http-apps/graphql/echo/graphql/schema/schema.graphql"
 
 # Databases
 databases:
