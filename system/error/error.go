@@ -9,6 +9,14 @@ type SystemError struct {
 }
 
 // Error string
-func (r *SystemError) Error() string {
-	return fmt.Sprintf("Status %d: Error => %v", r.StatusCode, r.Err)
+func (e *SystemError) Error() string {
+	return fmt.Sprintf("error [%d]: %s", e.StatusCode, e.Err)
+}
+
+// Extensions error Extensions
+func (e *SystemError) Extensions() map[string]interface{} {
+	return map[string]interface{}{
+		"code":    e.StatusCode,
+		"message": e.Err,
+	}
 }
